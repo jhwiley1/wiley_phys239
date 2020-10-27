@@ -4,24 +4,35 @@ from astropy.io import fits
 import numpy as np
 
 def function1(D,n,opt_dep):
+    #Function for problem 1, takes a depth D, density n, and optical depth opt_dep.  Returns a 2 element list containing the column density and cross section 
+
     col_den=float(D)*float(n) #Calculation for column density, obtained by integrating volumetric density over a column, in this case, depth D times density n
-    col_den=col_den*3.086*10.**18#Parsec to centimeter conversion to put column density in units of cm^-2
-    cro_sec=opt_dep/col_den # Cross section is equal to optical depth divided by column density.
+    col_den=col_den*3.086*10.**18 #Parsec to centimeter conversion to put column density in units of cm^-2
+    cro_sec=opt_dep/col_den #Cross section is equal to optical depth divided by column density.
+    
     return(col_den,cro_sec)
 
 def function2(D,n,cro_sec,I_0,S):
-    step_arr=np.linspace(0,D*3.086*10.**18,1000) #Define array 0 to D stepsize ds
+    #Fucntion for problem 2, cro_sec is an array of cross sections
+
+    step_arr=np.linspace(0,D*3.086*10.**18,1000) #Define array 0 to D with stepsize ds
     int_arr=np.zeros((len(step_arr),1)) #Initialize another array using same steps but holding intensity values
     int_arr[0]=I_0 #set first element to I_0
     opt_dep=cro_sec*float(D)*float(n)*3.086*10.**18
     temp=0
+    
     for i in range(0,len(int_arr)):
+    
         temp=temp+S*math.e**(-opt_dep[i])
-        if i != 0:
+    
+    if i != 0:
             int_arr[i]=I_0*math.e**(-opt_dep[i])+temp
+    
     return(float(int_arr[len(int_arr)-1]))
 
 def function3(v,cro_sec_0):
+    #Function for problem 3.  returns an array of cross sections in the shape of a gaussian given an input array of frequencies.
+
     gauss=cro_sec_0*math.e**(-np.square(v-500)/500)
     return gauss
 
@@ -81,3 +92,6 @@ for i in range(0,1000):
 
 plt.plot(x,I_D)
 plt.show()
+
+print('(b)')
+
