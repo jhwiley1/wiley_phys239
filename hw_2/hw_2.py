@@ -25,10 +25,9 @@ def function2(D,n,cro_sec,I_0,S):
     for i in range(0,len(int_arr)):
     
         temp=temp+S*(math.e**(-opt_dep+opt_deps[i]))*opt_dep/1000
-
         if i != 0:
             int_arr[i]=I_0*(math.e**(-opt_deps[i]))+temp
-    
+
     return(float(int_arr[len(int_arr)-1]))
 
 def function3(v,cro_sec_0,center,width):
@@ -132,20 +131,20 @@ print('(d)')
 
 I_0=1
 S=1
-cro_secs[3]=np.ones((1000,))
+cro_secs[3]=np.ones((1000,))*100
 
 function4(v,cro_secs[3],I_0,S)
 
 print('(e)')
 
 I_0=1
-S=5
+S=1000
 
 function4(v,cro_secs[2],I_0,S)
 
 print('(f)')
 
-I_0=5
+I_0=1000
 S=1
 
 function4(v,cro_secs[2],I_0,S)
